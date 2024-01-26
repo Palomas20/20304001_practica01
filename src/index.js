@@ -1,9 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+//cambio nuevo
 const app = express();
 const port = 3000;
-//otro comentario jsjsjsj
 
 app.use(bodyParser.json());
 
@@ -15,6 +15,10 @@ let tasks = [
 // Get all tasks
 app.get("/tasks", (req, res) => {
   res.json(tasks);
+});
+
+app.get("/issue", (req, res) => {
+  res.json(issue);
 });
 
 // Get a specific task
