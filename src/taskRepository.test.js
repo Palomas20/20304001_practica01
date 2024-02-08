@@ -1,62 +1,60 @@
 const tasksRepository = require("./taskRepository");
 
 describe("pruebas", () => {
-  // prueba unitaria
   test("Get all tasks", () => {
-    // Arrage
+    //Arrange
     let tasks = [];
-
     // Act
     tasks = tasksRepository.getAll();
-
     // Assert
     expect(tasks.length).toBe(2);
     expect(tasks.length == 2).toBe(true);
-    expect(typeof task == "array");
   });
+});
 
-  //Create
-  test("Create a task", () => {
+test("Get one task by id", () => {
+  // Arrage
+  let tasks = {};
+  // Act
+  task = tasksRepository.getById(1);
+  // Assert
+  expect(task.title == "Task 1").toBe(true);
+});
+
+describe("createTask", () => {
+  test("Create a new task", () => {
     // Arrange
-    const newTask = { id: 3, title: "New Task", completed: false };
-
+    const newTask = { title: "New Task", description: "Do something new" };
     // Act
-    tasksRepository.create(newTask);
-    const tasks = tasksRepository.getAll();
-
+    tasksRepository.createTask(newTask);
     // Assert
-    expect(tasks.length).toBe(3);
-    expect(tasks).toContainEqual(newTask);
+    expect(tasksRepository.getAll().length).toBe(3);
+    expect(tasksRepository.getById(3)).toEqual({ id: 3, ...newTask });
   });
+});
 
-  //update
-
-  test("Update a task", () => {
+describe("updateTask", () => {
+  test("Update existing task", () => {
     // Arrange
-    const taskIdToUpdate = 1;
-    const updatedTaskData = { title: "Updated Task", completed: true };
-
+    const taskId = 1;
+    const updatedTask = {
+      title: "Updated Task",
+      description: "Updated description",
+    };
     // Act
-    tasksRepository.update(taskIdToUpdate, updatedTaskData);
-    const tasks = tasksRepository.getAll();
-
+    const updatedTaskResult = tasksRepository.updateTask(taskId, updatedTask);
     // Assert
-    const updatedTask = tasks.find((task) => task.id === taskIdToUpdate);
-    expect(updatedTask.title).toBe(updatedTaskData.title);
-    expect(updatedTask.completed).toBe(updatedTaskData.completed);
+    expect(updatedTaskResult).toEqual({ id: 1, ...updatedTask });
+    expect(tasksRepository.getById(taskId)).toEqual(updatedTaskResult);
   });
+});
 
-  //delete
-  test("Delete a task", () => {
-    // Arrange
-    const taskIdToDelete = 1;
-
-    // Act
-    tasksRepository.delete(taskIdToDelete);
-    const tasks = tasksRepository.getAll();
-
-    // Assert
-    expect(tasks.length).toBe(2);
-    expect(tasks.find((task) => task.id === taskIdToDelete)).toBeUndefined();
-  });
+test("Delete a task", () => {
+  // Arrage
+  let tasks = [];
+  // Act
+  tasks = tasksRepository.getAll();
+  const task = 1;
+  tasksRepository.deleteTask(task);
+  expect(tasks.find((task) => task.id === task)).toBeUndefined();
 });
