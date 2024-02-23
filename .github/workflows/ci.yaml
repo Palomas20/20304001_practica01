@@ -8,10 +8,10 @@ on:
 
 jobs:
   testing:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: checkout repo
-      - uses: actions/checkout@v4 #git clone into runner
+        uses: actions/checkout@v4 #git clone into runner
 
       - name: setup nodejs
         uses: actions/setup-node@v4 #configure nodejs
